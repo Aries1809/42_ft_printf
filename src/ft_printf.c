@@ -6,7 +6,7 @@
 /*   By: kseltenr <kseltenr@student.42.fr>         #+#  +:+       +#+         */
 /*                                               +#+#+#+#+#+   +#+            */
 /*   Created: 2026/09/28 13:04:45 by kseltenr         #+#    #+#              */
-/*   Updated: 2026/09/30 12:31:31 by kseltenr        ###   ########.fr        */
+/*   Updated: 2026/09/30 14:15:23 by kseltenr        ###   ########.fr        */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ char	*parse_string(char *str)
 	{
 		if (str[counter] != '%')
 			ft_putchar_fd(str[counter], 1);
+		else
 	}
 }
 
