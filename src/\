@@ -1,0 +1,56 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                       :::      ::::::::    */
+/*   convertion.c                                      :+:      :+:    :+:    */
+/*                                                   +:+ +:+         +:+      */
+/*   By: kseltenr <kseltenr@student.42.fr>         #+#  +:+       +#+         */
+/*                                               +#+#+#+#+#+   +#+            */
+/*   Created: 2026/10/01 17:39:19 by kseltenr         #+#    #+#              */
+/*   Updated: 2026/10/03 17:04:37 by kseltenr        ###   ########.fr        */
+/*                                                                            */
+/* ************************************************************************** */
+
+//#include "libft.h"
+//#include "ft_printf.h"
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
+size_t	ft_hexlen(size_t dec)
+{
+	size_t	ret;
+
+	ret = 0;
+	while (dec > 0)
+	{
+		ret++;
+		dec /= 16;
+	}
+	return (ret);
+}
+
+char	*ft_hex(size_t dec)
+{
+	char	*ret;
+	char	*hex;
+	int		cnt;
+
+	if (dec == 0)
+		return ("0");
+	cnt = ft_hexlen(dec);
+	hex = "0123456789abcdef";
+	ret = malloc(cnt + 1);
+	if (!ret)
+		return (NULL);
+	ret[cnt] = '\0';
+	while (--cnt >= 0)
+	{
+		ret[cnt] = hex[dec % 16];
+		dec /= 16;
+	}
+	return (ret);
+}
+
+int main()
+{
+	printf("%s\n", ft_hex(62356284628734));
+}

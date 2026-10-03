@@ -5,8 +5,8 @@
 /*                                                   +:+ +:+         +:+      */
 /*   By: kseltenr <kseltenr@student.42.fr>         #+#  +:+       +#+         */
 /*                                               +#+#+#+#+#+   +#+            */
-/*   Created: 2026/09/28 13:04:45 by kseltenr         #+#    #+#              */
-/*   Updated: 2026/09/30 20:01:47 by kseltenr        ###   ########.fr        */
+/*   Created: 2026/10/01 16:18:40 by kseltenr         #+#    #+#              */
+/*   Updated: 2026/10/03 21:29:21 by kseltenr        ###   ########.fr        */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,44 +14,38 @@
 #include "libft.h"
 #include <stdlib.h>
 #include <unistd.h>
-#include <stdarg.h> // va_start va_arg va_end ca_copy va_list
+#include <stdarg.h> // va_list va_start va_arg va_copy va_end
 
-size_t	handel_conv(char *str, size_t position, va_list args)
+int	ft_printf(const char *format, ...)
 {
-	t_flags	flags;
-	size_t	start;
-	char	*temp;
-
-	start = position;
-	position++;
-	init_flags(&flags);
-	position = parse_flags(str, position, &flags);
-	position = parse_width(str, position, &flags);
-	position = parse_precision(str,position, &flags);
-	temp = ft_strdup(convertion(str[position], &flags, args));
-}
-
-char	*parse_string(char *str, va_list args)
-{
-	size_t	counter;
-
-	counter = 0;
-	while (str[counter])
-	{
-		if (str[counter] != '%')
-			ft_putchar_fd(str[counter], 1);
-		else
-			handel_conv(&*str, counter, args);
-		counter++;
-	}
-}
-
-int	ft_printf(const char *input, ...)
-{
-	char	*ret;
 	va_list	args;
-	char	*str;
+	size_t	alen;
 
-	str = ft_strdup(input);
-	ret = parse_string(str, args);
+	alen = count_args(format);
+	va_start(args, alen);
+	while (*format)
+	{
+		if (*format != '%')
+			ft_putchar_fd(*format, 1);
+		else
+		{
+			format++;
+			if (*format == 'c')
+				ft_putchar_fd(va_arg(args, int), 1);
+			else if (*format == 's')
+				ft_putstr_fd(va_arg(args, char *), 1);
+			else if (*format == 'd' || *format == 'i')
+				ft_putnbr_fd(va_arg(args, int), 1);
+			else if (*format == 'u')
+				ft_putuint_fd(va_arg(args, unsigned int), 1);
+			else if (*format == 'x' || *format == 'X')
+				ft_putstr_fd(ft_hex(va_arg(args, size_t), (int)(*format)), 1);
+			else if (*format == '%')
+				ft_putchar_fd('%', 1);
+			else if (*format == 'p')
+				// code
+		}
+		format++;
+	}
+	va_end(args);
 }
