@@ -6,11 +6,11 @@
 #    By: kseltenr <kseltenr@student.42.fr>         #+#  +:+       +#+          #
 #                                                +#+#+#+#+#+   +#+             #
 #    Created: 2026/09/26 11:59:16 by kseltenr         #+#    #+#               #
-#    Updated: 2026/10/05 00:35:39 by kseltenr        ###   ########.fr         #
+#    Updated: 2026/10/05 01:52:57 by kseltenr        ###   ########.fr         #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		= 42_ft_printf.a
+NAME		= libftprintf.a
 
 CC			= cc
 AR			= ar
@@ -34,7 +34,7 @@ INC_DIR		= inc
 LIBFT_DIR	= libft
 
 LIBFT		= $(LIBFT_DIR)/libft.a
-SRCS		= $(SRC_DIR)/ft_printf.c $(SRC_DIR)/convertion.c
+SRCS		= $(SRC_DIR)/ft_printf.c $(SRC_DIR)/convertion.c $(SRC_DIR)/helpers.c
 OBJS		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 DEPS		= $(OBJS:.o=.d)
 

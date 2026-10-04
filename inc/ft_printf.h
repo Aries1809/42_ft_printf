@@ -16,8 +16,12 @@
 # include <unistd.h>
 
 int		ft_printf(const char *format, ...);
-char	*ft_hex(size_t dec, int check);
-void	ft_putuint_fd(unsigned int n, int fd);
-void	ft_memaddr(void *ptr);
+size_t	ft_hex(size_t dec, int check);
+size_t	ft_putuint_all(unsigned int n, int fd);
+size_t	ft_memaddr(void *ptr);
+int		ft_putchar_all(char c, int fd);
+size_t	ft_putstr_all(char *s, int fd);
+size_t	ft_intlen(long long n);
+size_t	ft_putnbr_all(int n, int fd);
 
 #endif
