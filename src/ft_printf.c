@@ -6,7 +6,7 @@
 /*   By: kseltenr <kseltenr@student.42.fr>         #+#  +:+       +#+         */
 /*                                               +#+#+#+#+#+   +#+            */
 /*   Created: 2026/10/01 16:18:40 by kseltenr         #+#    #+#              */
-/*   Updated: 2026/10/04 15:56:04 by kseltenr        ###   ########.fr        */
+/*   Updated: 2026/10/05 00:27:28 by kseltenr        ###   ########.fr        */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,24 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdarg.h> // va_list va_start va_arg va_copy va_end
+
+void	ft_handle(const char *format, va_list args)
+{
+	if (*format == 'c')
+		ft_putchar_fd(va_arg(args, int), 1);
+	else if (*format == 's')
+		ft_putstr_fd(va_arg(args, char *), 1);
+	else if (*format == 'd' || *format == 'i')
+		ft_putnbr_fd(va_arg(args, int), 1);
+	else if (*format == 'u')
+		ft_putuint_fd(va_arg(args, unsigned int), 1);
+	else if (*format == 'x' || *format == 'X')
+		ft_putstr_fd(ft_hex(va_arg(args, size_t), (int)(*format)), 1);
+	else if (*format == '%')
+		ft_putchar_fd('%', 1);
+	else if (*format == 'p')
+		ft_memaddr(va_arg(args, void *));
+}
 
 int	ft_printf(const char *format, ...)
 {
@@ -28,20 +46,7 @@ int	ft_printf(const char *format, ...)
 		else
 		{
 			format++;
-			if (*format == 'c')
-				ft_putchar_fd(va_arg(args, int), 1);
-			else if (*format == 's')
-				ft_putstr_fd(va_arg(args, char *), 1);
-			else if (*format == 'd' || *format == 'i')
-				ft_putnbr_fd(va_arg(args, int), 1);
-			else if (*format == 'u')
-				ft_putuint_fd(va_arg(args, unsigned int), 1);
-			else if (*format == 'x' || *format == 'X')
-				ft_putstr_fd(ft_hex(va_arg(args, size_t), (int)(*format)), 1);
-			else if (*format == '%')
-				ft_putchar_fd('%', 1);
-			else if (*format == 'p')
-				ft_memaddr(va_arg(args, void *));
+			ft_handle(format, args);
 		}
 		format++;
 	}

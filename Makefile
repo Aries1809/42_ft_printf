@@ -6,7 +6,7 @@
 #    By: kseltenr <kseltenr@student.42.fr>         #+#  +:+       +#+          #
 #                                                +#+#+#+#+#+   +#+             #
 #    Created: 2026/09/26 11:59:16 by kseltenr         #+#    #+#               #
-#    Updated: 2026/10/04 19:20:51 by kseltenr        ###   ########.fr         #
+#    Updated: 2026/10/05 00:35:39 by kseltenr        ###   ########.fr         #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ INC_DIR		= inc
 LIBFT_DIR	= libft
 
 LIBFT		= $(LIBFT_DIR)/libft.a
-SRCS		= $(SRC_DIR)/ft_printf.c $(SRC_DIR)/convertion.c $(SRC_DIR)/helpers.c
+SRCS		= $(SRC_DIR)/ft_printf.c $(SRC_DIR)/convertion.c
 OBJS		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 DEPS		= $(OBJS:.o=.d)
 

@@ -13,10 +13,9 @@
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-#include <unistd.h>
+# include <unistd.h>
 
 int		ft_printf(const char *format, ...);
-size_t	count_args(const char *str);
 char	*ft_hex(size_t dec, int check);
 void	ft_putuint_fd(unsigned int n, int fd);
 void	ft_memaddr(void *ptr);
