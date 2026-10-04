@@ -6,7 +6,7 @@
 #    By: kseltenr <kseltenr@student.42.fr>         #+#  +:+       +#+          #
 #                                                +#+#+#+#+#+   +#+             #
 #    Created: 2026/09/26 11:59:16 by kseltenr         #+#    #+#               #
-#    Updated: 2026/09/26 20:55:50 by kseltenr        ###   ########.fr         #
+#    Updated: 2026/10/04 19:11:40 by kseltenr        ###   ########.fr         #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ INC_DIR		= inc
 LIBFT_DIR	= libft
 
 LIBFT		= $(LIBFT_DIR)/libft.a
-SRCS		= $(SRC_DIR)/ft_printf.c
+SRCS		= $(SRC_DIR)/ft_printf.c $(SRC_DIR)/convertion.c $(SRC_DIR)/helpers.c
 OBJS		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 DEPS		= $(OBJS:.o=.d)
 
@@ -45,9 +45,9 @@ all: $(NAME)
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
 
-$(NAME): $(OBJS)
+$(NAME): $(OBJS) $(LIBFT)
 	cp $(LIBFT) $(NAME)
-	$(CC) $(AR) $(ARFLAS) $@ $^
+	$(AR) $(ARFLAGS) $@ $(OBJS)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c Makefile
 	@mkdir -p $(dir $@)
@@ -69,4 +69,3 @@ re:
 
 .PHONY: all clean fclean re
 .DEFAULT_GOAL := all
-

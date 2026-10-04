@@ -6,7 +6,7 @@
 /*   By: kseltenr <kseltenr@student.42.fr>         #+#  +:+       +#+         */
 /*                                               +#+#+#+#+#+   +#+            */
 /*   Created: 2026/10/01 17:39:19 by kseltenr         #+#    #+#              */
-/*   Updated: 2026/10/03 21:00:03 by kseltenr        ###   ########.fr        */
+/*   Updated: 2026/10/04 14:44:41 by kseltenr        ###   ########.fr        */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "ft_printf.h"
 #include <unistd.h>
 #include <stdlib.h>
+#include <stdint.h>
 
 size_t	ft_hexlen(size_t dec)
 {
@@ -60,4 +61,13 @@ void	ft_putuint_fd(unsigned int n, int fd)
 	if (n > 9)
 		ft_putuint_fd(n / 10, fd);
 	ft_putchar_fd(n % 10 + '0', fd);
+}
+
+void	ft_memaddr(void *ptr)
+{
+	uintptr_t	addr;
+
+	addr = (uintptr_t)ptr;
+	ft_putstr_fd("0x", 1);
+	ft_putstr_fd(ft_hex(addr, 120), 1);
 }

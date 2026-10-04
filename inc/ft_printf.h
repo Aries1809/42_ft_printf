@@ -17,7 +17,8 @@
 
 int		ft_printf(const char *format, ...);
 size_t	count_args(const char *str);
-char	*hex(size_t dec, int check);
+char	*ft_hex(size_t dec, int check);
 void	ft_putuint_fd(unsigned int n, int fd);
+void	ft_memaddr(void *ptr);
 
 #endif

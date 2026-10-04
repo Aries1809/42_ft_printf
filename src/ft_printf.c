@@ -6,7 +6,7 @@
 /*   By: kseltenr <kseltenr@student.42.fr>         #+#  +:+       +#+         */
 /*                                               +#+#+#+#+#+   +#+            */
 /*   Created: 2026/10/01 16:18:40 by kseltenr         #+#    #+#              */
-/*   Updated: 2026/10/03 21:29:21 by kseltenr        ###   ########.fr        */
+/*   Updated: 2026/10/04 15:56:04 by kseltenr        ###   ########.fr        */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,8 @@
 int	ft_printf(const char *format, ...)
 {
 	va_list	args;
-	size_t	alen;
 
-	alen = count_args(format);
-	va_start(args, alen);
+	va_start(args, format);
 	while (*format)
 	{
 		if (*format != '%')
@@ -43,9 +41,10 @@ int	ft_printf(const char *format, ...)
 			else if (*format == '%')
 				ft_putchar_fd('%', 1);
 			else if (*format == 'p')
-				// code
+				ft_memaddr(va_arg(args, void *));
 		}
 		format++;
 	}
 	va_end(args);
+	return (0);
 }
