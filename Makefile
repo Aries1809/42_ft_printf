@@ -6,7 +6,7 @@
 #    By: kseltenr <kseltenr@student.42.fr>         #+#  +:+       +#+          #
 #                                                +#+#+#+#+#+   +#+             #
 #    Created: 2026/09/26 11:59:16 by kseltenr         #+#    #+#               #
-#    Updated: 2026/10/04 19:11:40 by kseltenr        ###   ########.fr         #
+#    Updated: 2026/10/04 19:20:51 by kseltenr        ###   ########.fr         #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ $(LIBFT):
 
 $(NAME): $(OBJS) $(LIBFT)
 	cp $(LIBFT) $(NAME)
-	$(AR) $(ARFLAGS) $@ $(OBJS)
+	$(AR) $(ARFLAGS) $@ $^
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c Makefile
 	@mkdir -p $(dir $@)
