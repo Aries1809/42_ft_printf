@@ -1,2 +1,1 @@
-# 42_ft_printf
-42 project to recreate the printf function
+*This project has been created as part of the 42 curriculum by kseltenr*
