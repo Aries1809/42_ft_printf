@@ -1,19 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                       :::      ::::::::    */
-/*   ft_printf.c                                       :+:      :+:    :+:    */
+/*   ft_printf_bonus.c                                 :+:      :+:    :+:    */
 /*                                                   +:+ +:+         +:+      */
 /*   By: kseltenr <kseltenr@student.42.fr>         #+#  +:+       +#+         */
 /*                                               +#+#+#+#+#+   +#+            */
-/*   Created: 2026/10/01 16:18:40 by kseltenr         #+#    #+#              */
-/*   Updated: 2026/10/06 15:22:32 by kseltenr        ###   ########.fr        */
+/*   Created: 2026/10/06 15:14:09 by kseltenr         #+#    #+#              */
+/*   Updated: 2026/10/06 15:52:49 by kseltenr        ###   ########.fr        */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
+#include "ft_printf_bonus.h"
+#include "libft.h"
 #include <stdlib.h>
 #include <unistd.h>
-#include <stdarg.h> // va_list va_start va_arg va_copy va_end
+#include <stdarg.h>
 
 size_t	ft_handle(const char *format, va_list args)
 {
@@ -37,11 +38,18 @@ size_t	ft_handle(const char *format, va_list args)
 	return (cnt);
 }
 
+void	init_flags(t_flag *flags)
+{
+
+}
+
 int	ft_printf(const char *format, ...)
 {
 	va_list	args;
 	size_t	len;
+	t_flag	flags;
 
+	init_flags(&flags)
 	va_start(args, format);
 	len = 0;
 	while (*format)
