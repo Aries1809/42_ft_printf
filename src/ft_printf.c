@@ -6,7 +6,7 @@
 /*   By: kseltenr <kseltenr@student.42.fr>         #+#  +:+       +#+         */
 /*                                               +#+#+#+#+#+   +#+            */
 /*   Created: 2026/10/01 16:18:40 by kseltenr         #+#    #+#              */
-/*   Updated: 2026/10/06 15:22:32 by kseltenr        ###   ########.fr        */
+/*   Updated: 2026/10/11 02:17:50 by kseltenr        ###   ########.fr        */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,9 @@ size_t	ft_handle(const char *format, va_list args)
 	else if (*format == 'd' || *format == 'i')
 		cnt += ft_putnbr_all(va_arg(args, int), 1);
 	else if (*format == 'u')
-		cnt += ft_putuint_all(va_arg(args, unsigned int), 1);
+		cnt += ft_putnbr_all(va_arg(args, unsigned int), 1);
 	else if (*format == 'x' || *format == 'X')
-		cnt += ft_hex(va_arg(args, size_t), (int)(*format));
+		cnt += ft_hex(va_arg(args, unsigned int), (int)(*format));
 	else if (*format == '%')
 		cnt += ft_putchar_all('%', 1);
 	else if (*format == 'p')
