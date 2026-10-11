@@ -6,7 +6,7 @@
 /*   By: kseltenr <kseltenr@student.42.fr>         #+#  +:+       +#+         */
 /*                                               +#+#+#+#+#+   +#+            */
 /*   Created: 2026/10/05 01:14:34 by kseltenr         #+#    #+#              */
-/*   Updated: 2026/10/11 04:46:34 by kseltenr        ###   ########.fr        */
+/*   Updated: 2026/10/11 15:10:56 by kseltenr        ###   ########.fr        */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,9 @@
 #include "libft.h"
 #include <stddef.h>
 
-int	ft_putchar_all(char c, int fd)
+size_t	ft_putchar_all(char c, int fd)
 {
-	write(fd, &c, 1);
-	return (1);
+	return (write(fd, &c, 1));
 }
 
 size_t	ft_putstr_all(char *s, int fd)
@@ -27,8 +26,7 @@ size_t	ft_putstr_all(char *s, int fd)
 	if (!s)
 		return (ft_putstr_all("(null)", 1));
 	len = ft_strlen(s);
-	write(fd, s, len);
-	return (len);
+	return (write(fd, s, len));
 }
 
 size_t	ft_intlen(long long n)

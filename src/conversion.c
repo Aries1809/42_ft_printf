@@ -6,14 +6,12 @@
 /*   By: kseltenr <kseltenr@student.42.fr>         #+#  +:+       +#+         */
 /*                                               +#+#+#+#+#+   +#+            */
 /*   Created: 2026/10/01 17:39:19 by kseltenr         #+#    #+#              */
-/*   Updated: 2026/10/11 04:46:21 by kseltenr        ###   ########.fr        */
+/*   Updated: 2026/10/11 15:12:16 by kseltenr        ###   ########.fr        */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "ft_printf.h"
 #include <stddef.h>
-#include <stdlib.h>
 #include <stdint.h>
 
 size_t	ft_hex(size_t dec, int check)
