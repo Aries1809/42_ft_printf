@@ -6,16 +6,16 @@
 /*   By: kseltenr <kseltenr@student.42.fr>         #+#  +:+       +#+         */
 /*                                               +#+#+#+#+#+   +#+            */
 /*   Created: 2026/10/01 16:18:40 by kseltenr         #+#    #+#              */
-/*   Updated: 2026/10/11 02:17:50 by kseltenr        ###   ########.fr        */
+/*   Updated: 2026/10/11 04:46:08 by kseltenr        ###   ########.fr        */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include <stdlib.h>
-#include <unistd.h>
-#include <stdarg.h> // va_list va_start va_arg va_copy va_end
+#include <stddef.h>
+#include <stdarg.h>
 
-size_t	ft_handle(const char *format, va_list args)
+static size_t	ft_handle(const char *format, va_list args)
 {
 	size_t	cnt;
 
@@ -42,6 +42,8 @@ int	ft_printf(const char *format, ...)
 	va_list	args;
 	size_t	len;
 
+	if (!format)
+		return (-1);
 	va_start(args, format);
 	len = 0;
 	while (*format)
@@ -50,6 +52,8 @@ int	ft_printf(const char *format, ...)
 			len += ft_putchar_all(*format, 1);
 		else
 		{
+			if (!format[1])
+				break ;
 			format++;
 			len += ft_handle(format, args);
 		}

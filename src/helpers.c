@@ -6,13 +6,13 @@
 /*   By: kseltenr <kseltenr@student.42.fr>         #+#  +:+       +#+         */
 /*                                               +#+#+#+#+#+   +#+            */
 /*   Created: 2026/10/05 01:14:34 by kseltenr         #+#    #+#              */
-/*   Updated: 2026/10/11 02:21:36 by kseltenr        ###   ########.fr        */
+/*   Updated: 2026/10/11 04:46:34 by kseltenr        ###   ########.fr        */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 #include "libft.h"
-#include <unistd.h>
+#include <stddef.h>
 
 int	ft_putchar_all(char c, int fd)
 {
@@ -60,7 +60,7 @@ size_t	ft_putnbr_all(long long n, int fd)
 		n = -n;
 	}
 	if (n > 9)
-		ft_putnbr_fd(n / 10, fd);
+		ft_putnbr_all(n / 10, fd);
 	ft_putchar_fd(n % 10 + '0', fd);
 	return (ft_intlen(nb));
 }

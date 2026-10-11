@@ -6,14 +6,14 @@
 /*   By: kseltenr <kseltenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/02 14:27:37 by kseltenr          #+#    #+#             */
-/*   Updated: 2026/10/11 02:13:29 by kseltenr        ###   ########.fr        */
+/*   Updated: 2026/10/11 04:46:47 by kseltenr        ###   ########.fr        */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-# include <unistd.h>
+# include <stddef.h>
 
 size_t	ft_hex(size_t dec, int check);
 size_t	ft_intlen(long long n);
