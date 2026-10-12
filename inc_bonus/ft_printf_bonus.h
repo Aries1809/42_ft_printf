@@ -23,6 +23,8 @@ typedef struct s_flag
 	size_t	sharp;
 	size_t	space;
 	size_t	plus;
+	size_t	width;
+	char	conversion;
 }			t_flag;
 
 size_t	ft_hex(size_t dec, int check);

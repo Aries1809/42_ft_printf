@@ -6,7 +6,7 @@
 /*   By: kseltenr <kseltenr@student.42.fr>         #+#  +:+       +#+         */
 /*                                               +#+#+#+#+#+   +#+            */
 /*   Created: 2026/10/06 15:14:09 by kseltenr         #+#    #+#              */
-/*   Updated: 2026/10/11 17:12:22 by kseltenr        ###   ########.fr        */
+/*   Updated: 2026/10/12 17:15:06 by kseltenr        ###   ########.fr        */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,22 +19,24 @@
 size_t	flag_check(const char *format, t_flag *flags, size_t *length)
 {
 	size_t	cnt;
-	char	*buf;
 
 	cnt = 0;
 	if (*format == '0' || *format == '-' || *format == '.')
 	{
-		buf = malloc(4096);
-		while (ft_isdigit(format[cnt++]))
-			buf[cnt] = format[cnt];
-		buf[4095] = '\0';
 		if (*format == '0')
-			flags->zero = ft_atoi(buf);
-		if (*format == '-')
-			flags->minus = ft_atoi(buf);
-		if (*format == '.')
-			flags->dot = ft_atoi(buf);
-		free(buf);
+			flags->zero = 1;
+		else if (*format == '-')
+			flags->minus = 1;
+		else if (*format == '.')
+			flags->dot = 1;
+		else if (*format == '#')
+			flags->sharp = 1;
+		else if (*format == ' ')
+			flags->space = 1;
+		else if (*format == '+')
+			flags->plus = 1;
+		else if (*format >= 1 && *format <= 9)
+			flags->width = 1;
 	}
 	*length += cnt;
 	return (cnt);
