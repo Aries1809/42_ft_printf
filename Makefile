@@ -6,7 +6,7 @@
 #    By: kseltenr <kseltenr@student.42.fr>         #+#  +:+       +#+          #
 #                                                +#+#+#+#+#+   +#+             #
 #    Created: 2026/09/26 11:59:16 by kseltenr         #+#    #+#               #
-#    Updated: 2026/10/11 15:18:22 by kseltenr        ###   ########.fr         #
+#    Updated: 2026/10/12 15:05:01 by kseltenr        ###   ########.fr         #
 #                                                                              #
 # **************************************************************************** #
 
@@ -48,7 +48,9 @@ DEPS		= $(OBJS:.o=.d) $(OBJS_B:.o=.d)
 
 COMPILE_DB	= compile_commands.json
 
-all: $(NAME)
+all: $(NAME) $(NAME_B)
+
+mandatory: $(NAME)
 
 bonus: $(NAME_B)
 
@@ -85,5 +87,5 @@ re:
 
 -include $(DEPS)
 
-.PHONY: all clean fclean re bonus
+.PHONY: all clean fclean re bonus mandatory
 .DEFAULT_GOAL := all
