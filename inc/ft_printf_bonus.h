@@ -5,33 +5,36 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kseltenr <kseltenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/10/06 15:12:02 by kseltenr          #+#    #+#             */
-/*   Updated: 2026/10/11 17:14:55 by kseltenr        ###   ########.fr        */
+/*   Created: 2026/10/18 20:29:38 by kseltenr          #+#    #+#             */
+/*   Updated: 2026/10/19 20:20:17 by kseltenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_BONUS_H
 # define FT_PRINTF_BONUS_H
 
-# include <unistd.h>
+# define CONVERSIONS "cspdiuxX%"
+# define FLAGS "-0# +"
 
-typedef struct s_flag
+typedef struct s_spec
 {
-	size_t	minus;
-	size_t	zero;
-	size_t	dot;
-	size_t	sharp;
-	size_t	space;
-	size_t	plus;
-	size_t	width;
-	char	conversion;
-}			t_flag;
+	int		minus;
+	int		zero;
+	int		hash;
+	int		space;
+	int		plus;
+	int		width;
+	int		prec;
+	char	conv;
+}	t_spec;
 
-size_t	ft_hex(size_t dec, int check);
-size_t	ft_memaddr(void *ptr);
 int		ft_printf(const char *format, ...);
-size_t	ft_putchar_all(char c, int fd);
-size_t	ft_putnbr_all(long long n, int fd);
-size_t	ft_putstr_all(char *s, int fd);
+void	pf_parse(const char **fmt, t_spec *sp);
+int		pf_convert_nbr(t_spec *sp, uint64_t n, int32_t neg);
+int		pf_convert_str(t_spec *sp, const char *s);
+int		pf_emit_nbr(t_spec *sp, const char *pre, const char *num, int32_t len);
+int		pf_emit_str(t_spec *sp, const char *s, int32_t len);
+int		pf_write(const char *s, int32_t len);
+int		pf_pad(char c, int32_t n);
 
 #endif

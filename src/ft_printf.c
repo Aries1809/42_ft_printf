@@ -1,63 +1,86 @@
 /* ************************************************************************** */
 /*                                                                            */
-/*                                                       :::      ::::::::    */
-/*   ft_printf.c                                       :+:      :+:    :+:    */
-/*                                                   +:+ +:+         +:+      */
-/*   By: kseltenr <kseltenr@student.42.fr>         #+#  +:+       +#+         */
-/*                                               +#+#+#+#+#+   +#+            */
-/*   Created: 2026/10/01 16:18:40 by kseltenr         #+#    #+#              */
-/*   Updated: 2026/10/11 15:12:47 by kseltenr        ###   ########.fr        */
+/*                                                        :::      ::::::::   */
+/*   ft_printf.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: kseltenr <kseltenr@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2026/10/18 20:05:20 by kseltenr          #+#    #+#             */
+/*   Updated: 2026/10/19 19:04:54 by kseltenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "ft_printf.h"
-#include <stddef.h>
 #include <stdarg.h>
+#include <unistd.h>
+#include <stdint.h>
+#include "ft_printf.h"
+#include "libft.h"
 
-static size_t	ft_handle(const char *format, va_list args)
+static int	pf_dispatch(char c, va_list *ap)
 {
-	size_t	cnt;
+	int64_t	n;
 
-	cnt = 0;
-	if (*format == 'c')
-		cnt += ft_putchar_all(va_arg(args, int), 1);
-	else if (*format == 's')
-		cnt += ft_putstr_all(va_arg(args, char *), 1);
-	else if (*format == 'd' || *format == 'i')
-		cnt += ft_putnbr_all(va_arg(args, int), 1);
-	else if (*format == 'u')
-		cnt += ft_putnbr_all(va_arg(args, unsigned int), 1);
-	else if (*format == 'x' || *format == 'X')
-		cnt += ft_hex(va_arg(args, unsigned int), (int)(*format));
-	else if (*format == '%')
-		cnt += ft_putchar_all('%', 1);
-	else if (*format == 'p')
-		cnt += ft_memaddr(va_arg(args, void *));
-	return (cnt);
+	if (c == 'c')
+		return (pf_putchar(va_arg(*ap, int)));
+	if (c == 's')
+		return (pf_putstr(va_arg(*ap, const char *)));
+	if (c == 'p')
+		return (pf_putptr(va_arg(*ap, void *)));
+	if (c == 'd' || c == 'i')
+	{
+		n = va_arg(*ap, int);
+		if (n < 0)
+			return (pf_putnbr(-n, DECIMAL, "-"));
+		return (pf_putnbr(n, DECIMAL, ""));
+	}
+	if (c == 'u')
+		return (pf_putnbr(va_arg(*ap, unsigned int), DECIMAL, ""));
+	if (c == 'x')
+		return (pf_putnbr(va_arg(*ap, unsigned int), HEX_LOWER, ""));
+	if (c == 'X')
+		return (pf_putnbr(va_arg(*ap, unsigned int), HEX_UPPER, ""));
+	return (write(1, "%", 1));
+}
+
+static int	pf_print_chunk(const char **fmt, va_list *ap)
+{
+	const char	*start;
+
+	start = *fmt;
+	(*fmt)++;
+	if (*start == '%')
+	{
+		if (!**fmt)
+			return (-1);
+		if (ft_strchr(CONVERSIONS, **fmt))
+		{
+			(*fmt)++;
+			return (pf_dispatch(start[1], ap));
+		}
+	}
+	while (**fmt && **fmt != '%')
+		(*fmt)++;
+	return (write(1, start, *fmt - start));
 }
 
 int	ft_printf(const char *format, ...)
 {
-	va_list	args;
-	size_t	len;
+	va_list	ap;
+	int32_t		count;
+	int32_t		ret;
 
 	if (!format)
 		return (-1);
-	va_start(args, format);
-	len = 0;
-	while (*format)
+	va_start(ap, format);
+	count = 0;
+	ret = 0;
+	while (*format && ret >= 0)
 	{
-		if (*format != '%')
-			len += ft_putchar_all(*format, 1);
-		else
-		{
-			if (!format[1])
-				break ;
-			format++;
-			len += ft_handle(format, args);
-		}
-		format++;
+		ret = pf_print_chunk(&format, &ap);
+		count += ret;
 	}
-	va_end(args);
-	return (len);
+	va_end(ap);
+	if (ret < 0)
+		return (-1);
+	return (count);
 }

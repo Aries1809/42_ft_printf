@@ -1,91 +1,63 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                        :::      ::::::::     #
-#    Makefile                                          :+:      :+:    :+:     #
-#                                                    +:+ +:+         +:+       #
-#    By: kseltenr <kseltenr@student.42.fr>         #+#  +:+       +#+          #
-#                                                +#+#+#+#+#+   +#+             #
-#    Created: 2026/09/26 11:59:16 by kseltenr         #+#    #+#               #
-#    Updated: 2026/10/12 15:05:01 by kseltenr        ###   ########.fr         #
-#                                                                              #
-# **************************************************************************** #
-
 NAME		= libftprintf.a
-NAME_B		= libftprintf_bonus.a
 
 CC			= cc
-AR			= ar
-ARFLAGS		= rcs
 CFLAGS		= -Wall -Wextra -Werror
-CPPFLAGS	= -MMD -MP -I inc -I libft
-CPPFLAGS_B	= -MMD -MP -I inc_bonus -I libft
-DEBUG		?= 0
-RM			= rm -f
+AR			= ar rcs
+RM			= rm -rf
 
-JOBS		?= $(shell nproc)
-MAKEFLAGS	+= -j $(JOBS) -l $(JOBS)
-
-ifeq ($(DEBUG),1)
-CFLAGS		+= -g3
-CPPFLAGS	+= -DDEBUG=1
-endif
+LIBFT_DIR	= libft
+LIBFT		= $(LIBFT_DIR)/libft.a
 
 SRC_DIR		= src
-SRC_B_DIR	= src_bonus
-OBJ_DIR		= obj
-OBJ_B_DIR	= obj_bonus
 INC_DIR		= inc
-INC_B_DIR	= inc_bonus
-LIBFT_DIR	= libft
+OBJ_DIR		= obj
+INCLUDES	= -I $(INC_DIR) -I $(LIBFT_DIR)
 
-LIBFT		= $(LIBFT_DIR)/libft.a
-SRCS		= $(SRC_DIR)/ft_printf.c $(SRC_DIR)/conversion.c $(SRC_DIR)/helpers.c
-SRCS_B		= $(SRC_B_DIR)/ft_printf_bonus.c $(SRC_DIR)/conversion_bonus.c \
-				$(SRC_DIR)/helpers_bonus.c
-OBJS		= $(SRCS:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
-OBJS_B		= $(SRCS_B:$(SRC_B_DIR)/%.c=$(OBJ_B_DIR)/%.o)
-DEPS		= $(OBJS:.o=.d) $(OBJS_B:.o=.d)
+SRC			= ft_printf.c \
+			  ft_printf_utils.c
 
-COMPILE_DB	= compile_commands.json
+BONUS_SRC	= ft_printf_bonus.c \
+			  ft_parse_bonus.c \
+			  ft_convert_bonus.c \
+			  ft_emit_bonus.c
 
-all: $(NAME) $(NAME_B)
+OBJ			= $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
+BONUS_OBJ	= $(addprefix $(OBJ_DIR)/, $(BONUS_SRC:.c=.o))
 
-mandatory: $(NAME)
+all: $(NAME)
 
-bonus: $(NAME_B)
+$(NAME): $(LIBFT) $(OBJ)
+	cp $(LIBFT) $(NAME)
+	$(AR) $(NAME) $(OBJ)
+	@$(RM) .bonus
+
+bonus: .bonus
+
+.bonus: $(LIBFT) $(BONUS_OBJ)
+	cp $(LIBFT) $(NAME)
+	$(AR) $(NAME) $(BONUS_OBJ)
+	@touch .bonus
 
 $(LIBFT):
 	$(MAKE) -C $(LIBFT_DIR)
 
-$(NAME_B): $(OBJS_B) $(LIBFT)
-	cp $(LIBFT) $(NAME_B)
-	$(AR) $(ARFLAGS) $@ $^
+$(OBJ_DIR)/%_bonus.o: $(SRC_DIR)/%_bonus.c $(INC_DIR)/ft_printf_bonus.h | $(OBJ_DIR)
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-$(NAME): $(OBJS) $(LIBFT)
-	cp $(LIBFT) $(NAME)
-	$(AR) $(ARFLAGS) $@ $^
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC_DIR)/ft_printf.h | $(OBJ_DIR)
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c Makefile
-	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(CPPFLAGS) -c $< -o $@
-
-$(OBJ_B_DIR)/%.o: $(SRC_B_DIR)/%.c Makefile
-	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(CPPFLAGS_B) -c $< -o $@
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
 
 clean:
-	$(RM) -r $(OBJ_DIR) $(OBJ_B_DIR)
 	$(MAKE) -C $(LIBFT_DIR) clean
+	$(RM) $(OBJ_DIR) .bonus
 
-fclean: clean
-	$(RM) $(NAME) $(NAME_B)
+fclean:
 	$(MAKE) -C $(LIBFT_DIR) fclean
+	$(RM) $(OBJ_DIR) .bonus $(NAME)
 
-re:
-	$(MAKE) fclean
-	$(MAKE) all
+re: fclean all
 
--include $(DEPS)
-
-.PHONY: all clean fclean re bonus mandatory
-.DEFAULT_GOAL := all
+.PHONY: all bonus clean fclean re

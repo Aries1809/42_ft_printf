@@ -5,22 +5,25 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kseltenr <kseltenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2026/10/02 14:27:37 by kseltenr          #+#    #+#             */
-/*   Updated: 2026/10/11 15:11:12 by kseltenr        ###   ########.fr        */
+/*   Created: 2026/10/18 20:05:28 by kseltenr          #+#    #+#             */
+/*   Updated: 2026/10/19 19:04:19 by kseltenr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
 
-# include <stddef.h>
+# define CONVERSIONS "cspdiuxX%"
+# define DECIMAL "0123456789"
+# define HEX_LOWER "0123456789abcdef"
+# define HEX_UPPER "0123456789ABCDEF"
 
-size_t		ft_hex(size_t dec, int check);
-size_t		ft_intlen(long long n);
-size_t		ft_memaddr(void *ptr);
-int			ft_printf(const char *format, ...);
-size_t		ft_putchar_all(char c, int fd);
-size_t		ft_putnbr_all(long long n, int fd);
-size_t		ft_putstr_all(char *s, int fd);
+# include <stdint.h>
+
+int	ft_printf(const char *format, ...);
+int	pf_putchar(int32_t c);
+int	pf_putstr(const char *s);
+int	pf_putptr(void *ptr);
+int	pf_putnbr(uint64_t n, const char *base, const char *prefix);
 
 #endif
