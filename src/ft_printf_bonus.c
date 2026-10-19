@@ -6,11 +6,12 @@
 /*   By: kseltenr <kseltenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/18 20:29:30 by kseltenr          #+#    #+#             */
-/*   Updated: 2026/10/19 19:06:32 by kseltenr         ###   ########.fr       */
+/*   Updated: 2026/10/19 20:54:52 by kseltenr        ###   ########.fr        */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdarg.h>
+#include <stdint.h>
 #include "ft_printf_bonus.h"
 #include "libft.h"
 

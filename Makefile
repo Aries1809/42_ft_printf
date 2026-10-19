@@ -1,7 +1,7 @@
 NAME		= libftprintf.a
 
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror -MMD -MP
 AR			= ar rcs
 RM			= rm -rf
 
@@ -23,6 +23,7 @@ BONUS_SRC	= ft_printf_bonus.c \
 
 OBJ			= $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 BONUS_OBJ	= $(addprefix $(OBJ_DIR)/, $(BONUS_SRC:.c=.o))
+DEPS		= $(OBJ:.o=.d) $(BONUS_OBJ:.o=.d)
 
 all: $(NAME)
 
@@ -38,13 +39,10 @@ bonus: .bonus
 	$(AR) $(NAME) $(BONUS_OBJ)
 	@touch .bonus
 
-$(LIBFT):
+$(LIBFT): FORCE
 	$(MAKE) -C $(LIBFT_DIR)
 
-$(OBJ_DIR)/%_bonus.o: $(SRC_DIR)/%_bonus.c $(INC_DIR)/ft_printf_bonus.h | $(OBJ_DIR)
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
-
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC_DIR)/ft_printf.h | $(OBJ_DIR)
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 $(OBJ_DIR):
@@ -60,4 +58,8 @@ fclean:
 
 re: fclean all
 
-.PHONY: all bonus clean fclean re
+FORCE:
+
+-include $(DEPS)
+
+.PHONY: all bonus clean fclean re FORCE
