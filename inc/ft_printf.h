@@ -6,7 +6,7 @@
 /*   By: kseltenr <kseltenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/18 20:05:28 by kseltenr          #+#    #+#             */
-/*   Updated: 2026/10/19 19:04:19 by kseltenr         ###   ########.fr       */
+/*   Updated: 2026/10/19 21:10:13 by kseltenr        ###   ########.fr        */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@
 # include <stdint.h>
 
 int	ft_printf(const char *format, ...);
-int	pf_putchar(int32_t c);
-int	pf_putstr(const char *s);
-int	pf_putptr(void *ptr);
+int	pf_putchar(int c);
 int	pf_putnbr(uint64_t n, const char *base, const char *prefix);
+int	pf_putptr(void *ptr);
+int	pf_putstr(const char *s);
 
 #endif

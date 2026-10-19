@@ -6,7 +6,7 @@
 /*   By: kseltenr <kseltenr@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/10/18 20:05:20 by kseltenr          #+#    #+#             */
-/*   Updated: 2026/10/19 19:04:54 by kseltenr         ###   ########.fr       */
+/*   Updated: 2026/10/19 21:15:22 by kseltenr        ###   ########.fr        */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 #include <stdint.h>
 #include "ft_printf.h"
 #include "libft.h"
-
+ 
 static int	pf_dispatch(char c, va_list *ap)
 {
 	int64_t	n;
-
+ 
 	if (c == 'c')
 		return (pf_putchar(va_arg(*ap, int)));
 	if (c == 's')
@@ -41,11 +41,11 @@ static int	pf_dispatch(char c, va_list *ap)
 		return (pf_putnbr(va_arg(*ap, unsigned int), HEX_UPPER, ""));
 	return (write(1, "%", 1));
 }
-
+ 
 static int	pf_print_chunk(const char **fmt, va_list *ap)
 {
 	const char	*start;
-
+ 
 	start = *fmt;
 	(*fmt)++;
 	if (*start == '%')
@@ -62,13 +62,13 @@ static int	pf_print_chunk(const char **fmt, va_list *ap)
 		(*fmt)++;
 	return (write(1, start, *fmt - start));
 }
-
+ 
 int	ft_printf(const char *format, ...)
 {
 	va_list	ap;
-	int32_t		count;
-	int32_t		ret;
-
+	int32_t	count;
+	int32_t	ret;
+ 
 	if (!format)
 		return (-1);
 	va_start(ap, format);
